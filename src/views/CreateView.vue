@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-center">
     <div class="alert" :class="submitStatus" role="alert">{{ message }}</div>
   </div>
-  <a-form ref="formRef" :model="formState" v-bind="formItemLayout">
+  <a-form ref="formRef" :model="formState" v-bind="formItemLayout" :rules="rules">
     <a-form-item name="date" label="日付" v-bind="config">
       <a-date-picker
         v-model:value="formState['date']"
@@ -13,12 +13,7 @@
       />
     </a-form-item>
 
-    <a-form-item
-      name="category"
-      label="カテゴリ"
-      has-feedback
-      :rules="[{ required: true, message: 'カテゴリを選択してください。' }]"
-    >
+    <a-form-item name="category" label="カテゴリ">
       <a-select v-model:value="formState.category.id" placeholder="チケットのカテゴリ">
         <a-select-option
           :value="id"
@@ -28,43 +23,23 @@
       </a-select>
     </a-form-item>
 
-    <a-form-item
-      name="staff"
-      label="スタッフ名"
-      has-feedback
-      :rules="[{ required: true, message: 'スタッフ名を選択してください。' }]"
-    >
+    <a-form-item name="staff" label="スタッフ名">
       <a-select v-model:value="formState.staff.id" placeholder="Your name">
         <a-select-option :value="id" v-for="staff in staffName" :key="staff.id">{{ staff.name }}</a-select-option>
       </a-select>
     </a-form-item>
 
-    <a-form-item
-      name="store"
-      label="店舗名"
-      has-feedback
-      :rules="[{ required: true, message: '店舗名を選択してください。' }]"
-    >
+    <a-form-item name="store" label="店舗名">
       <a-select v-model:value="formState.store.id" placeholder="Store name">
         <a-select-option :value="id" v-for="store in storeNames" :key="store.id">{{ store.name }}</a-select-option>
       </a-select>
     </a-form-item>
 
-    <a-form-item
-      :name="inquiry"
-      label="問合せ内容"
-      has-feedback
-      :rules="[{ required: true, message: '問合せ内容を記入してください。' }]"
-    >
+    <a-form-item name="inquiry" label="問合せ内容">
       <a-textarea v-model:value="formState.inquiry" />
     </a-form-item>
 
-    <a-form-item
-      :name="respond"
-      label="対応内容"
-      has-feedback
-      :rules="[{ required: true, message: '対応内容を記入してください。' }]"
-    >
+    <a-form-item name="respond" label="対応内容">
       <a-textarea v-model:value="formState.respond" />
     </a-form-item>
 
@@ -140,6 +115,62 @@ export default ({
       },
     });
 
+    const rules = {
+      date: [
+        {
+          required: true,
+          message: '日にちを選択してください。',
+        },
+      ],
+      inquiry: [
+        {
+          required: true,
+          message: '問い合わせ内容を記入してください。',
+        },
+      ],
+      respond: [
+        {
+          required: true,
+          message: '対応内容を記入してください。',
+        },
+      ],
+      phone: [
+        {
+          required: true,
+          message: 'お客様電話番号を数字のみで記入してください。',
+          trigger: 'blur',
+          type: 'number'
+        },
+      ],
+      contact_name: [
+        {
+          required: true,
+          message: 'お客様氏名を記入してください。',
+        },
+      ],
+      category: [
+        {
+          required: true,
+          message: '問い合わせカテゴリを記入してください。',
+          // trigger: 'blur'
+        },
+      ],
+      staff: [
+        {
+          required: true,
+          message: 'スタッフ名を選択してください。',
+          // trigger: 'change'
+        },
+      ],
+      store: [
+        {
+          required: true,
+          message: '店舗名を選択してください。',
+          // trigger: 'change'
+        },
+      ],
+    };
+
     const getStaffName = () => {
       EventService.getStaffName()
         .then((response) => {
@@ -185,6 +216,7 @@ export default ({
 
     return {
       formState,
+      rules,
       formItemLayout,
       formRef,
       staffName, //dropdown
