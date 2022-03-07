@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/tickets/",
+  baseURL: "http://127.0.0.1:8000/api/",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -9,21 +9,28 @@ const apiClient = axios.create({
   },
 });
 
+// const headers = {"X-CSRFTOKEN": "<csrf_token_very_long_string_goes_here>"}
+
 export default {
-  getTodos() {
-    return apiClient.get("", {
-      params: {
-        _limit: 3,
-      },
-    });
+  getTickets() {
+    return apiClient.get("tickets/");
   },
-  postTodo(data) {
-    return apiClient.post("", data);
+  postTicket(data) {
+    return apiClient.post("tickets/", data, );
   },
-  updateTodo(id, data) {
-    return apiClient.put(`${id}`, data);
+  updateTicket(id, data) {
+    return apiClient.put(`tickets/${id}`, data);
   },
-  deleteTodo(id) {
-    return apiClient.delete(`${id}`);
+  deleteTicket(id) {
+    return apiClient.delete(`tickets/${id}`);
+  },
+  getStoreName() {
+    return apiClient.get("store/");
+  },
+  getStaffName() {
+    return apiClient.get("staff/");
+  },
+  getTicketCategories() {
+    return apiClient.get("ticket-categories/");
   },
 };

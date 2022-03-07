@@ -1,100 +1,61 @@
 <template>
-  <h1>To Do List</h1>
-  <!-- {{todos}} -->
-  <TodoForm></TodoForm>
-  <TodoTable :data="todos" :columns="columns">
-    <!-- <slot name="expandedRowRender" >{{record.respond}}</slot> -->
-  </TodoTable>
+
+  <TicketTable :data="tickets" :columns="columns">
+    <slot name="店舗名">Hi</slot>
+  </TicketTable>
 </template>
 
 <script>
 import EventService from "@/plugins/EventService";
-import TodoTable from "@/components/TodoTable.vue";
-import TodoForm from "@/components/TodoForm.vue";
-
-const columns = [
-  {
-    title: "日付",
-    dataIndex: "date",
-  },
-  {
-    title: "対応",
-    dataIndex: "respond",
-
-  },
-  {
-    title: "タイトル",
-    dataIndex: "title",
-  },
-
-  {
-    title: "緊急度",
-    dataIndex: "urgent",
-  },
-  {
-    title: "ステータス",
-    dataIndex: "status",
-  },
-  {
-    title: "問い合わせ内容",
-    dataIndex: "inquery",
-  },
-  {
-    title: "弊社回答",
-    dataIndex: "respond",
-  },
-  {
-    title: "顧客名",
-    dataIndex: "contact_name",
-  },
-  {
-    title: "顧客Email",
-    dataIndex: "email",
-  },
-  {
-    title: "顧客電話番号",
-    dataIndex: "phone",
-  },
-  {
-    title: "エスカレート可否",
-    dataIndex: "escalated",
-  },
-  {
-    title: "カテゴリ",
-    dataIndex: "category",
-  },
-  {
-    title: "スタッフ名",
-    dataIndex: "staff",
-  },
-  {
-    title: "店舗名",
-    dataIndex: "store",
-  },
-];
-
-
+import TicketTable from "@/components/TicketTable.vue";
+import { ref } from 'vue'
 
 export default {
   components: {
-    TodoTable,
-    TodoForm,
+    TicketTable,
   },
-  data() {
-    return {
-      todos: [],
-      columns,
-    };
-  },
-  created() {
-    EventService.getTodos()
+  setup() {
+    const columns = [
+      {
+        title: "日付",
+        dataIndex: "date",
+        width: 200,
+      },
+      {
+        title: "店舗名",
+        dataIndex: "store.name",
+        width: 200,
+        // slots: {
+        //   customRender: 'store.name',
+        // },
+      },
+      {
+        title: "カテゴリ",
+        dataIndex: "category.name",
+        width: 100,
+      },
+      {
+        title: "問い合わせ内容",
+        dataIndex: "inquiry",
+        width: 400,
+      },
+    ];
+
+    const tickets = ref(null)
+    EventService.getTickets()
       .then((response) => {
-        this.todos = response.data;
+        tickets.value = response.data;
       })
       .catch((error) => {
         console.log("Error" + error.response);
       });
+
+    return {
+      columns,
+      tickets,
+    };
   },
+
 };
 </script>
 

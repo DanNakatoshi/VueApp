@@ -1,30 +1,31 @@
 <template>
-  <nav>
-    <router-link to="/">チケット一覧</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="container mt-4">
+    <h1 id="app-name" class="text-center">チケット管理システム</h1>
+
+    <nav class="text-center m-3">
+      <a-button type="primary" class="mx-3">
+        <router-link to="/">チケット一覧</router-link>
+      </a-button>
+      <a-button type="primary" danger class="mx-3">
+        <router-link to="/create">チケット作成</router-link>
+      </a-button>
+    </nav>
+
+    <router-view />
+  </div>
 </template>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+* {
+  font-family: "Noto Sans JP", sans-serif;
 }
 
-nav {
-  padding: 30px;
+#app-name {
+  background-color: rgb(17, 120, 138);
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>
