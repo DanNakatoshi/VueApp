@@ -3,17 +3,28 @@
     <h1 id="app-name" class="text-center">チケット管理システム</h1>
 
     <nav class="text-center m-3">
-      <a-button type="primary" class="mx-3">
+      <!-- <a-button type="primary" class="mx-3">
         <router-link to="/">チケット一覧</router-link>
-      </a-button>
-      <a-button type="primary" danger class="mx-3">
+      </a-button> -->
+      <CreateModal></CreateModal>
+      <!-- <a-button type="primary" danger class="mx-3">
         <router-link to="/create">チケット作成</router-link>
-      </a-button>
+      </a-button>-->
     </nav>
 
     <router-view />
   </div>
 </template>
+
+<script>
+import CreateModal from "@/components/CreateModal.vue"
+
+export default {
+  components: {
+    CreateModal,
+  },
+}
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");

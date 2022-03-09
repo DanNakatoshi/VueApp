@@ -11,5 +11,8 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "vue/html-self-closing": "off",
+    /* tslint:disable:no-empty */
+    // "no-empty": "off",
+    "no-empty-function": "off"
   },
 };

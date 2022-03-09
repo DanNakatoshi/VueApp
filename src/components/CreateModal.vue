@@ -1,77 +1,90 @@
 <template>
   <!-- {{ formState }} -->
-  <div class="d-flex justify-content-center">
-    <div class="alert" :class="submitStatus" role="alert">{{ message }}</div>
+  <div>
+    <a-button type="primary" @click="showModal">チケット作成</a-button>
+    <a-modal
+      v-model:visible="visible"
+      title="チケット作成"
+      @ok="createTicket();"
+      width="800px"
+      ok-text="確定"
+      cancel-text="キャンセル"
+    >
+      <div class="d-flex justify-content-center">
+        <div class="alert" :class="submitStatus" role="alert">{{ message }}</div>
+      </div>
+      <a-form ref="formRef" :model="formState" v-bind="formItemLayout" :rules="rules">
+        <a-form-item name="date" label="日付" >
+          <a-date-picker
+            v-model:value="formState['date']"
+            show-time
+            format="YYYY-MM-DD HH:mm"
+            value-format="YYYY-MM-DD HH:mm"
+          />
+        </a-form-item>
+
+        <a-form-item name="category" label="カテゴリ">
+          <a-select v-model:value="formState.category.id" placeholder="チケットのカテゴリ">
+            <a-select-option
+              :value="id"
+              v-for="category in ticketCategories"
+              :key="category.id"
+            >{{ category.name }}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item name="staff" label="スタッフ名">
+          <a-select v-model:value="formState.staff.id" placeholder="Your name">
+            <a-select-option :value="id" v-for="staff in staffName" :key="staff.id">{{ staff.name }}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item name="store" label="店舗名">
+          <a-select v-model:value="formState.store.id" placeholder="Store name">
+            <a-select-option
+              :value="id"
+              v-for="store in storeNames"
+              :key="store.id"
+            >{{ store.name }}</a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <a-form-item name="inquiry" label="問合せ内容">
+          <a-textarea v-model:value="formState.inquiry" />
+        </a-form-item>
+
+        <a-form-item name="respond" label="対応内容">
+          <a-textarea v-model:value="formState.respond" />
+        </a-form-item>
+
+        <a-form-item name="status" label="対応完了したか">
+          <a-radio-group v-model:value="formState['status']">
+            <a-radio :value="false">未完了（オープン）</a-radio>
+            <a-radio :value="true">完了（クローズ）</a-radio>
+          </a-radio-group>
+        </a-form-item>
+
+        <a-form-item label="お客様氏名" name="contact_name">
+          <a-input v-model:value="formState.contact_name" />
+        </a-form-item>
+
+        <a-form-item label="お客様メールアドレス" name="email">
+          <a-input v-model:value="formState.email" />
+        </a-form-item>
+
+        <a-form-item label="お客様電話番号" name="phone">
+          <a-input v-model:value="formState.phone" />
+        </a-form-item>
+
+        <a-form-item name="escalated" label="上司報告が必要か">
+          <a-radio-group v-model:value="formState['escalated']">
+            <a-radio :value="true">報告済み</a-radio>
+            <a-radio :value="false">報告不要</a-radio>
+          </a-radio-group>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
-  <a-form ref="formRef" :model="formState" v-bind="formItemLayout" :rules="rules">
-    <a-form-item name="date" label="日付" v-bind="config">
-      <a-date-picker
-        v-model:value="formState['date']"
-        show-time
-        format="YYYY-MM-DD HH:mm:ss"
-        value-format="YYYY-MM-DD HH:mm:ss"
-      />
-    </a-form-item>
-
-    <a-form-item name="category" label="カテゴリ">
-      <a-select v-model:value="formState.category.id" placeholder="チケットのカテゴリ">
-        <a-select-option
-          :value="id"
-          v-for="category in ticketCategories"
-          :key="category.id"
-        >{{ category.name }}</a-select-option>
-      </a-select>
-    </a-form-item>
-
-    <a-form-item name="staff" label="スタッフ名">
-      <a-select v-model:value="formState.staff.id" placeholder="Your name">
-        <a-select-option :value="id" v-for="staff in staffName" :key="staff.id">{{ staff.name }}</a-select-option>
-      </a-select>
-    </a-form-item>
-
-    <a-form-item name="store" label="店舗名">
-      <a-select v-model:value="formState.store.id" placeholder="Store name">
-        <a-select-option :value="id" v-for="store in storeNames" :key="store.id">{{ store.name }}</a-select-option>
-      </a-select>
-    </a-form-item>
-
-    <a-form-item name="inquiry" label="問合せ内容">
-      <a-textarea v-model:value="formState.inquiry" />
-    </a-form-item>
-
-    <a-form-item name="respond" label="対応内容">
-      <a-textarea v-model:value="formState.respond" />
-    </a-form-item>
-
-    <a-form-item name="status" label="対応完了したか">
-      <a-radio-group v-model:value="formState['status']">
-        <a-radio :value="false">未完了（オープン）</a-radio>
-        <a-radio :value="true">完了（クローズ）</a-radio>
-      </a-radio-group>
-    </a-form-item>
-
-    <a-form-item label="お客様氏名" name="contact_name">
-      <a-input v-model:value="formState.contact_name" />
-    </a-form-item>
-
-    <a-form-item label="お客様メールアドレス" name="email">
-      <a-input v-model:value="formState.email" />
-    </a-form-item>
-
-    <a-form-item label="お客様電話番号" name="phone">
-      <a-input v-model:value="formState.phone" />
-    </a-form-item>
-
-    <a-form-item name="escalated" label="上司報告が必要か">
-      <a-radio-group v-model:value="formState['escalated']">
-        <a-radio :value="true">報告済み</a-radio>
-        <a-radio :value="false">報告不要</a-radio>
-      </a-radio-group>
-    </a-form-item>
-    <a-form-item :wrapper-col="{ span: 12, offset: 6 }">
-      <a-button type="primary" html-type="submit" @click="createTicket">Submit</a-button>
-    </a-form-item>
-  </a-form>
 </template>
 <script>
 import { ref, reactive, toRaw } from 'vue';
@@ -79,6 +92,14 @@ import EventService from '@/plugins/EventService';
 
 export default ({
   setup() {
+    // ModalSetup
+    const visible = ref(false);
+
+    const showModal = () => {
+      visible.value = true;
+    };
+
+    // Form Setup
     const message = ref("フォームを記入してください。");
     const submitStatus = ref("alert-primary");
     const staffName = ref(null);
@@ -175,7 +196,6 @@ export default ({
       EventService.getStaffName()
         .then((response) => {
           staffName.value = response.data;
-          console.log("これがスタッフ" + staffName.value)
         })
     }
 
@@ -198,9 +218,9 @@ export default ({
         .then((response) => {
           console.log("FORM" + formState)
           console.log("success!" + response.data);
-          message.value = "フォームの提出が完了しました。";
           submitStatus.value = "alert-success";
           formRef.value.resetFields();
+          visible.value = false;
         })
         .catch((error) => {
           console.log(error);
@@ -215,6 +235,10 @@ export default ({
     getStoreName();
 
     return {
+      // Modal
+      visible,
+      showModal,
+      // Form
       formState,
       rules,
       formItemLayout,

@@ -1,4 +1,5 @@
 <template>
+
   <a-collapse v-model:activeKey="activeKey" :bordered="false">
     <template #expandIcon="{ isActive }">
       <caret-right-outlined :rotate="isActive ? 90 : 0" />
@@ -24,10 +25,25 @@
       <div>Phone: {{ record.phone }}</div>
     </a-collapse-panel>
   </a-collapse>
+  <div class="d-flex justify-content-end">
+    <EditModal :record="record">
+
+    </EditModal>
+    <DeleteModal :record="record" :submitDelete="submitDelete" >
+      <template v-slot:delete-content>
+        <p>日付: {{ record.date }}</p>
+        <p>問い合わせ内容: {{ record.inquiry }}</p>
+        <p>対応内容: {{ record.respond }}</p>
+      </template>
+    </DeleteModal>
+  </div>
 </template>
 <script>
 import { CaretRightOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
+import DeleteModal from '@/components/DeleteModal.vue';
+import EditModal from '@/components/EditModal.vue';
+import EventService from '@/plugins/EventService';
 
 export default defineComponent({
   props: {
@@ -35,16 +51,37 @@ export default defineComponent({
   },
   components: {
     CaretRightOutlined,
+    DeleteModal,
+    EditModal
   },
 
-  setup() {
+  setup(props) {
+    // const title = "このチケットを削除しますか？"
+    const id = ref(props.record.id)
+
     const activeKey = ref(['1']);
     const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
+
+    const submitDelete = () => {
+      EventService.deleteTicket(id.value)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("Error" + error.response);
+        });
+    };
+
     return {
+      // title,
       activeKey,
       customStyle,
+      submitDelete,
     };
   },
+
+
+
 
 });
 </script>

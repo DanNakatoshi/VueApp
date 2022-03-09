@@ -1,5 +1,4 @@
 <template>
-
   <TicketTable :data="tickets" :columns="columns">
     <slot name="店舗名">Hi</slot>
   </TicketTable>
@@ -8,7 +7,7 @@
 <script>
 import EventService from "@/plugins/EventService";
 import TicketTable from "@/components/TicketTable.vue";
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export default {
   components: {
@@ -20,6 +19,9 @@ export default {
         title: "日付",
         dataIndex: "date",
         width: 200,
+        slots: {
+          customRender: 'date',
+        },
       },
       {
         title: "店舗名",
@@ -42,15 +44,24 @@ export default {
     ];
 
     const tickets = ref(null)
-    EventService.getTickets()
-      .then((response) => {
-        tickets.value = response.data;
-      })
-      .catch((error) => {
-        console.log("Error" + error.response);
-      });
+
+    const getTicketList = () => {
+      EventService.getTickets()
+        .then((response) => {
+          tickets.value = response.data;
+        })
+        .catch((error) => {
+          console.log("Error" + error.response);
+        });
+    }
+    getTicketList()
+
+    watch(tickets, function () {
+      getTicketList()
+    })
 
     return {
+      getTicketList,
       columns,
       tickets,
     };

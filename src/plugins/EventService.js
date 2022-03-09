@@ -19,7 +19,7 @@ export default {
     return apiClient.post("tickets/", data, );
   },
   updateTicket(id, data) {
-    return apiClient.put(`tickets/${id}`, data);
+    return apiClient.patch(`tickets/${id}/`, data);
   },
   deleteTicket(id) {
     return apiClient.delete(`tickets/${id}`);

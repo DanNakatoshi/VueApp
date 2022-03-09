@@ -7,9 +7,17 @@
     rowKey="id"
     size="middle"
   >
-    <!-- <template #store="{ text }">
-      {{ text }}
-    </template> -->
+    <template #date="{ text }">
+      {{ text.toString() }}
+      <!-- <div :value="text" show-time format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm"></div> -->
+      <!-- <a-date-picker
+          :value="text"
+          show-time
+          format="YYYY-MM-DD HH:mm"
+          value-format="YYYY-MM-DD HH:mm"
+          disabled 
+      />-->
+    </template>
 
     <template #expandedRowRender="{ record }">
       <TableDetailsVue :record="record"></TableDetailsVue>
