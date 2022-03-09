@@ -1,6 +1,4 @@
 <template>
-Hi
-  {{ record }}
   <a-table
     :columns="columns"
     :data-source="data"
@@ -9,37 +7,25 @@ Hi
     rowKey="id"
     size="middle"
   >
-    <template #date="{text}">
-      <DateTimeFormat :datetime="text"></DateTimeFormat>
-    </template>
+    <!-- <template #date="{ text }">{{ text }}</template> -->
 
     <template #expandedRowRender="{ record }">
-      <TableDetailsVue :record="record"></TableDetailsVue>
+      <TableDetails :record="record"></TableDetails>
     </template>
   </a-table>
 </template>
 
 <script>
-import TableDetailsVue from "@/components/TableDetails.vue";
-import DateTimeFormat from './DateTimeFormat.vue';
-// import { ref } from '@vue/reactivity';
-// import moment, { Moment } from 'moment';
+import TableDetails from "@/components/TableDetails.vue";
 
 export default {
   components: {
-    TableDetailsVue,
-    DateTimeFormat,
+    TableDetails,
   },
   props: [
     "data",
     "columns",
   ],
-  // setup(props) {
-  //   const datetime = ref(props.record)
-  //   return {
-  //     datetime,
-  //   }
-  // }
 };
 </script>
 

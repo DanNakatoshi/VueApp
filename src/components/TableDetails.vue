@@ -56,7 +56,6 @@ export default defineComponent({
   },
 
   setup(props) {
-    // const title = "このチケットを削除しますか？"
     const id = ref(props.record.id)
 
     const activeKey = ref(['1']);

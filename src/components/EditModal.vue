@@ -120,7 +120,6 @@ export default defineComponent({
         span: 14,
       },
     };
-    // const message = ref("")
 
     const formState = reactive({
       date: props.record.date,
@@ -145,8 +144,6 @@ export default defineComponent({
     const staffName = ref(null);
     const storeNames = ref(null);
     const ticketCategories = ref(null);
-    // const formRef = ref([]);
-
 
     const getStaffName = () => {
       EventService.getStaffName()
@@ -161,7 +158,6 @@ export default defineComponent({
           ticketCategories.value = response.data;
         })
     }
-
 
     const getStoreName = () => {
       EventService.getStoreName()

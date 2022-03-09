@@ -15,9 +15,6 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue';
-// import { Modal } from 'ant-design-vue';
-// import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-
 
 export default defineComponent({
   props: [
@@ -43,8 +40,6 @@ export default defineComponent({
         visible.value = false;
       }, 1500);
     }
-    // const message = ref("")
-
 
     return {
       deleted,

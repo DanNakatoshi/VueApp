@@ -1,6 +1,5 @@
 <template>
   <TicketTable :data="tickets" :columns="columns">
-    <slot name="店舗名">Hi</slot>
   </TicketTable>
 </template>
 
@@ -19,17 +18,11 @@ export default {
         title: "日付",
         dataIndex: "date",
         width: 200,
-        slots: {
-          customRender: 'date',
-        },
       },
       {
         title: "店舗名",
         dataIndex: "store.name",
         width: 200,
-        // slots: {
-        //   customRender: 'store.name',
-        // },
       },
       {
         title: "カテゴリ",
@@ -50,9 +43,9 @@ export default {
         .then((response) => {
           tickets.value = response.data;
         })
-        .catch((error) => {
-          console.log("Error" + error.response);
-        });
+        // .catch((error) => {
+        //   console.log("Error" + error.response);
+        // });
     }
     getTicketList()
 

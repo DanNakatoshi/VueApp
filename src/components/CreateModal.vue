@@ -1,5 +1,4 @@
 <template>
-  <!-- {{ formState }} -->
   <div>
     <a-button type="primary" @click="showModal">チケット作成</a-button>
     <a-modal
@@ -10,11 +9,12 @@
       ok-text="確定"
       cancel-text="キャンセル"
     >
+      {{ formState }}
       <div class="d-flex justify-content-center">
         <div class="alert" :class="submitStatus" role="alert">{{ message }}</div>
       </div>
       <a-form ref="formRef" :model="formState" v-bind="formItemLayout" :rules="rules">
-        <a-form-item name="date" label="日付" >
+        <a-form-item name="date" label="日付">
           <a-date-picker
             v-model:value="formState['date']"
             show-time
@@ -122,7 +122,7 @@ export default ({
     const formState = reactive({
       date: '',
       status: true,
-      inquiry: '',
+      inquiry: 'Hi',
       respond: '',
       contact_name: '',
       email: '',
