@@ -46,9 +46,9 @@ import EditModal from '@/components/EditModal.vue';
 import EventService from '@/plugins/EventService';
 
 export default defineComponent({
-  props: {
-    record: Object,
-  },
+  props: [
+    "record"
+  ],
   components: {
     CaretRightOutlined,
     DeleteModal,
@@ -73,7 +73,6 @@ export default defineComponent({
     };
 
     return {
-      // title,
       activeKey,
       customStyle,
       submitDelete,

@@ -1,4 +1,6 @@
 <template>
+Hi
+  {{ record }}
   <a-table
     :columns="columns"
     :data-source="data"
@@ -7,16 +9,8 @@
     rowKey="id"
     size="middle"
   >
-    <template #date="{ text }">
-      {{ text.toString() }}
-      <!-- <div :value="text" show-time format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm"></div> -->
-      <!-- <a-date-picker
-          :value="text"
-          show-time
-          format="YYYY-MM-DD HH:mm"
-          value-format="YYYY-MM-DD HH:mm"
-          disabled 
-      />-->
+    <template #date="{text}">
+      <DateTimeFormat :datetime="text"></DateTimeFormat>
     </template>
 
     <template #expandedRowRender="{ record }">
@@ -27,20 +21,25 @@
 
 <script>
 import TableDetailsVue from "@/components/TableDetails.vue";
+import DateTimeFormat from './DateTimeFormat.vue';
+// import { ref } from '@vue/reactivity';
+// import moment, { Moment } from 'moment';
+
 export default {
   components: {
     TableDetailsVue,
+    DateTimeFormat,
   },
-  props: {
-    data: {
-      type: Array,
-      default: () => [],
-    },
-    columns: {
-      type: Array,
-      default: () => [],
-    },
-  },
+  props: [
+    "data",
+    "columns",
+  ],
+  // setup(props) {
+  //   const datetime = ref(props.record)
+  //   return {
+  //     datetime,
+  //   }
+  // }
 };
 </script>
 

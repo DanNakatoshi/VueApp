@@ -97,11 +97,14 @@ export default ({
 
     const showModal = () => {
       visible.value = true;
+      message.value = "フォームを記入してください。";
+      submitStatus.value = "alert-primary";
+      formRef.value.resetFields();
     };
 
     // Form Setup
-    const message = ref("フォームを記入してください。");
-    const submitStatus = ref("alert-primary");
+    let message = ref("");
+    let submitStatus = ref("");
     const staffName = ref(null);
     const storeNames = ref(null);
     const ticketCategories = ref(null);
