@@ -105,7 +105,7 @@ export default defineComponent({
       visible.value = false;
     };
 
-    const subimitted = () => {
+    const subimitted = async () => {
       submitted.value = true;
       setTimeout(() => {
         visible.value = false;
@@ -148,23 +148,23 @@ export default defineComponent({
     // const formRef = ref([]);
 
 
-    const getStaffName = () => {
-      EventService.getStaffName()
+    const getStaffName = async () => {
+      await EventService.getStaffName()
         .then((response) => {
           staffName.value = response.data;
         })
     }
 
-    const getTicketCategories = () => {
-      EventService.getTicketCategories()
+    const getTicketCategories = async () => {
+      await EventService.getTicketCategories()
         .then((response) => {
           ticketCategories.value = response.data;
         })
     }
 
 
-    const getStoreName = () => {
-      EventService.getStoreName()
+    const getStoreName = async () => {
+      await EventService.getStoreName()
         .then((response) => {
           storeNames.value = response.data;
         })

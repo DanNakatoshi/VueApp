@@ -56,14 +56,13 @@ export default defineComponent({
   },
 
   setup(props) {
-    // const title = "このチケットを削除しますか？"
     const id = ref(props.record.id)
 
     const activeKey = ref(['1']);
     const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
-    const submitDelete = () => {
-      EventService.deleteTicket(id.value)
+    const submitDelete = async() => {
+      await EventService.deleteTicket(id.value)
         .then((response) => {
           console.log(response.data);
         })
