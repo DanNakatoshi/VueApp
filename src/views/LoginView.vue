@@ -60,9 +60,9 @@ export default defineComponent({
       EventService.submitLogin(toRaw(formState))
         .then((response) => {
           console.log(response.data)
-          localStorage.setItem('token', response.data.token)
-          localStorage.setItem('user_id', response.data.user_id)
-          localStorage.setItem('user_name', response.data.user_name)
+          window.localStorage.setItem('token', response.data.token)
+          window.localStorage.setItem('user_id', response.data.user_id)
+          window.localStorage.setItem('user_name', response.data.user_name)
           router.push({ name: 'home' })
         })
         .catch((error) => {

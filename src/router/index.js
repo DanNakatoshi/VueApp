@@ -29,7 +29,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  if (to.meta.requiresAuth && localStorage.getItem("token") === null) {
+  if (to.meta.requiresAuth && window.localStorage.getItem("token") === null) {
     return { name: "login" };
   }
 });

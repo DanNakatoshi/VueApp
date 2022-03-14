@@ -10,7 +10,7 @@
 <script>
 import EventService from "@/plugins/EventService.js";
 import TicketTable from "@/components/TicketTable.vue";
-import { ref, watch } from 'vue'
+import { watch, ref } from 'vue'
 import CreateModal from "@/components/CreateModal.vue"
 import router from '@/router'
 
@@ -52,10 +52,10 @@ export default {
       },
     ];
 
-    const userName = ref(localStorage.getItem("user_name"))
+    const userName = ref(window.localStorage.getItem("user_name"))
     const tickets = ref(null)
 
-    const getTicketList = async () => {
+    const getTicketList = () => {
       EventService.getTickets()
         .then((response) => {
           tickets.value = response.data;
@@ -65,14 +65,18 @@ export default {
         });
     }
 
-    watch(tickets, async function () {
-      getTicketList()
+    watch(tickets, (newTickets, oldTickets) => {
+      if (newTickets != oldTickets) {
+        getTicketList()
+      } else if (tickets.value == null) {
+        getTicketList()
+      }
     })
 
     const logOut = () => {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user_id')
-      localStorage.removeItem('user_name')
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('user_id')
+      window.localStorage.removeItem('user_name')
       router.push({ name: 'login' })
     }
 
