@@ -12,7 +12,7 @@ const loginClient = axios.create({
 const apiClient = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
   headers: {
-    Authorization: `Token ${localStorage.getItem('token')}`,
+    Authorization: `Token ${localStorage.getItem("token")}`,
     "Content-Type": "application/json",
   },
 });
@@ -24,6 +24,7 @@ export default {
   submitLogin(logininfo) {
     return loginClient.post("api-token-auth/", logininfo);
   },
+  // Ticekts
   getTickets() {
     return apiClient.get("tickets/");
   },
@@ -39,9 +40,9 @@ export default {
   getStoreName() {
     return apiClient.get("store/");
   },
-  getStaffName() {
-    return apiClient.get("staff/");
-  },
+  // getStaffName() {
+  //   return apiClient.get("staff/");
+  // },
   getTicketCategories() {
     return apiClient.get("ticket-categories/");
   },

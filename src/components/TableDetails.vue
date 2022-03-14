@@ -1,5 +1,4 @@
 <template>
-
   <a-collapse v-model:activeKey="activeKey" :bordered="false">
     <template #expandIcon="{ isActive }">
       <caret-right-outlined :rotate="isActive ? 90 : 0" />
@@ -26,10 +25,8 @@
     </a-collapse-panel>
   </a-collapse>
   <div class="d-flex justify-content-end">
-    <EditModal :record="record">
-
-    </EditModal>
-    <DeleteModal :record="record" :submitDelete="submitDelete" >
+    <EditModal :record="record"></EditModal>
+    <DeleteModal :record="record" :submitDelete="submitDelete">
       <template v-slot:delete-content>
         <p>日付: {{ record.date }}</p>
         <p>問い合わせ内容: {{ record.inquiry }}</p>
@@ -61,8 +58,8 @@ export default defineComponent({
     const activeKey = ref(['1']);
     const customStyle = 'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
 
-    const submitDelete = async() => {
-      await EventService.deleteTicket(id.value)
+    const submitDelete = async () => {
+      EventService.deleteTicket(id.value)
         .then((response) => {
           console.log(response.data);
         })

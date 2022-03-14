@@ -14,8 +14,8 @@
           <a-date-picker
             v-model:value="formState['date']"
             show-time
-            format="YYYY-MM-DD HH:mm"
-            value-format="YYYY-MM-DD HH:mm"
+            format="MM/DD/YYYY HH:mm"
+            value-format="MM/DD/YYYY HH:mm"
           />
         </a-form-item>
 
@@ -26,12 +26,6 @@
               v-for="category in ticketCategories"
               :key="category.id"
             >{{ category.name }}</a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item name="staff" label="スタッフ名">
-          <a-select v-model:value="formState.staff.id" placeholder="Your name">
-            <a-select-option :value="id" v-for="staff in staffName" :key="staff.id">{{ staff.name }}</a-select-option>
           </a-select>
         </a-form-item>
 
@@ -134,29 +128,26 @@ export default defineComponent({
       category: {
         id: props.record.category.id
       },
-      staff: {
-        id: props.record.staff.id
-      },
       store: {
         id: props.record.store.id
       },
     });
 
-    const staffName = ref(null);
+    // const staffName = ref(null);
     const storeNames = ref(null);
     const ticketCategories = ref(null);
     // const formRef = ref([]);
 
 
-    const getStaffName = async () => {
-      await EventService.getStaffName()
-        .then((response) => {
-          staffName.value = response.data;
-        })
-    }
+    // const getStaffName = async () => {
+    //   await EventService.getStaffName()
+    //     .then((response) => {
+    //       staffName.value = response.data;
+    //     })
+    // }
 
     const getTicketCategories = async () => {
-      await EventService.getTicketCategories()
+      EventService.getTicketCategories()
         .then((response) => {
           ticketCategories.value = response.data;
         })
@@ -164,7 +155,7 @@ export default defineComponent({
 
 
     const getStoreName = async () => {
-      await EventService.getStoreName()
+      EventService.getStoreName()
         .then((response) => {
           storeNames.value = response.data;
         })
@@ -182,7 +173,7 @@ export default defineComponent({
         })
     }
 
-    getStaffName()
+    // getStaffName()
     getTicketCategories()
     getStoreName()
 
@@ -194,7 +185,6 @@ export default defineComponent({
       hideModal,
       subimitted,
       formState,
-      staffName, //dropdown
       ticketCategories, //dropdown
       storeNames, //dropdown
       updateTicket,

@@ -1,11 +1,10 @@
 <template>
+  <h1>Welcome, {{ userName }}</h1>
   <div class="d-flex justify-content-center mb-4">
     <CreateModal></CreateModal>
     <a-button type="primary mx-4" @click.prevent="logOut">ログアウト</a-button>
   </div>
-  <TicketTable :data="tickets" :columns="columns">
-    <!-- <slot name="店舗名">Hi</slot> -->
-  </TicketTable>
+  <TicketTable :data="tickets" :columns="columns"></TicketTable>
 </template>
 
 <script>
@@ -35,9 +34,6 @@ export default {
         title: "店舗名",
         dataIndex: "store.name",
         width: 200,
-        // slots: {
-        //   customRender: 'store.name',
-        // },
       },
       {
         title: "カテゴリ",
@@ -49,32 +45,40 @@ export default {
         dataIndex: "inquiry",
         width: 400,
       },
+      {
+        title: "作成者",
+        dataIndex: "staff.user_name",
+        width: 200,
+      },
     ];
 
+    const userName = ref(localStorage.getItem("user_name"))
     const tickets = ref(null)
 
     const getTicketList = async () => {
-      await EventService.getTickets()
+      EventService.getTickets()
         .then((response) => {
           tickets.value = response.data;
         })
         .catch((error) => {
-          console.log(localStorage.getItem('token'))
           console.log("Error" + error);
         });
     }
-    getTicketList()
 
-    watch(tickets, async function() {
+    watch(tickets, async function () {
       getTicketList()
     })
 
     const logOut = () => {
       localStorage.removeItem('token')
+      localStorage.removeItem('user_id')
+      localStorage.removeItem('user_name')
       router.push({ name: 'login' })
     }
 
+    getTicketList()
     return {
+      userName,
       getTicketList,
       columns,
       tickets,

@@ -8,7 +8,7 @@
     class="d-flex justify-content-center"
   >
     <a-form-item>
-      <a-input v-model:value="formState.username" placeholder="Username">
+      <a-input v-model:value="formState.username" placeholder="Email">
         <template #prefix>
           <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
         </template>
@@ -38,6 +38,10 @@ import EventService from '@/plugins/EventService.js'
 import router from '@/router';
 
 export default defineComponent({
+  components: {
+    UserOutlined,
+    LockOutlined,
+  },
   setup() {
     const formState = reactive({
       username: '',
@@ -55,16 +59,15 @@ export default defineComponent({
     const submitLogin = () => {
       EventService.submitLogin(toRaw(formState))
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data)
           localStorage.setItem('token', response.data.token)
-          console.log(localStorage)
+          localStorage.setItem('user_id', response.data.user_id)
+          localStorage.setItem('user_name', response.data.user_name)
+          localStorage.setItem('loggedIn', true)
           router.push({ name: 'home' })
-
         })
         .catch((error) => {
-          console.log(formState)
           console.log("Error" + error);
-
         });
     }
 
@@ -77,9 +80,6 @@ export default defineComponent({
     };
   },
 
-  components: {
-    UserOutlined,
-    LockOutlined,
-  },
+
 });
 </script>

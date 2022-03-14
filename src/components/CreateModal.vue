@@ -1,5 +1,4 @@
 <template>
-  <!-- {{ formState }} -->
   <div>
     <a-button type="primary" @click="showModal">チケット作成</a-button>
     <a-modal
@@ -10,16 +9,17 @@
       ok-text="確定"
       cancel-text="キャンセル"
     >
+      {{ formState }}
       <div class="d-flex justify-content-center">
         <div class="alert" :class="submitStatus" role="alert">{{ message }}</div>
       </div>
       <a-form ref="formRef" :model="formState" v-bind="formItemLayout" :rules="rules">
-        <a-form-item name="date" label="日付" >
+        <a-form-item name="date" label="日付">
           <a-date-picker
             v-model:value="formState['date']"
             show-time
-            format="YYYY-MM-DD HH:mm"
-            value-format="YYYY-MM-DD HH:mm"
+            format="MM/DD/YYYY HH:mm"
+            value-format="MM/DD/YYYY HH:mm"
           />
         </a-form-item>
 
@@ -30,12 +30,6 @@
               v-for="category in ticketCategories"
               :key="category.id"
             >{{ category.name }}</a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item name="staff" label="スタッフ名">
-          <a-select v-model:value="formState.staff.id" placeholder="Your name">
-            <a-select-option :value="id" v-for="staff in staffName" :key="staff.id">{{ staff.name }}</a-select-option>
           </a-select>
         </a-form-item>
 
@@ -105,7 +99,7 @@ export default ({
     // Form Setup
     let message = ref("");
     let submitStatus = ref("");
-    const staffName = ref(null);
+    // const staffName = ref(null);
     const storeNames = ref(null);
     const ticketCategories = ref(null);
     const formRef = ref([]);
@@ -129,9 +123,6 @@ export default ({
       phone: '',
       escalated: false,
       category: {
-        id: ''
-      },
-      staff: {
         id: ''
       },
       store: {
@@ -179,13 +170,6 @@ export default ({
           // trigger: 'blur'
         },
       ],
-      staff: [
-        {
-          required: true,
-          message: 'スタッフ名を選択してください。',
-          // trigger: 'change'
-        },
-      ],
       store: [
         {
           required: true,
@@ -195,12 +179,12 @@ export default ({
       ],
     };
 
-    const getStaffName = () => {
-      EventService.getStaffName()
-        .then((response) => {
-          staffName.value = response.data;
-        })
-    }
+    // const getStaffName = () => {
+    //   EventService.getStaffName()
+    //     .then((response) => {
+    //       staffName.value = response.data;
+    //     })
+    // }
 
     const getTicketCategories = () => {
       EventService.getTicketCategories()
@@ -233,7 +217,6 @@ export default ({
         });
     }
 
-    getStaffName();
     getTicketCategories();
     getStoreName();
 
@@ -246,7 +229,6 @@ export default ({
       rules,
       formItemLayout,
       formRef,
-      staffName, //dropdown
       ticketCategories, //dropdown
       storeNames, //dropdown
       message,
