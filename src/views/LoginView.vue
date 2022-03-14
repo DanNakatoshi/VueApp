@@ -63,7 +63,6 @@ export default defineComponent({
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('user_id', response.data.user_id)
           localStorage.setItem('user_name', response.data.user_name)
-          localStorage.setItem('loggedIn', true)
           router.push({ name: 'home' })
         })
         .catch((error) => {
